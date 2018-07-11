@@ -1,14 +1,37 @@
 <template>
-  <List v-if="data" :data="data" type="Bans"></List>
+  <List v-if="bans" :data="bans" type="Bans"></List>
 </template>
 
 <script>
+import gql from 'graphql-tag';
+import List from '@/components/List';
+
 export default {
   name: 'Home',
+  components: { List },
   data() {
     return {
-      data: null,
+      bans: null,
     };
+  },
+  apollo: {
+    bans: gql`
+    {
+  bans {
+    player {
+      uuid
+      name
+    }
+    active
+    reason
+    staff
+    server
+    begin
+    end
+  }
+}
+
+    `,
   },
 };
 </script>

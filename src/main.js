@@ -7,6 +7,8 @@ import { createProvider } from './vue-apollo';
 
 Vue.config.productionTip = false;
 
+Vue.prototype.$appName = 'Tallcraft Bans';
+
 new Vue({
   router,
   provide: createProvider().provide(),

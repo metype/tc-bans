@@ -1,18 +1,29 @@
 <template>
-  <List v-if="bans" :data="bans" type="Bans"></List>
+  <div>
+    <h1 v-if="type !== 'ban'">Invalid type</h1>
+    <div v-else-if="bans">
+      <ListView :data="bans" :type="type"></ListView>
+    </div>
+  </div>
 </template>
 
 <script>
 import gql from 'graphql-tag';
-import List from '@/components/List';
+import ListView from '@/components/ListView';
 
 export default {
   name: 'Home',
-  components: { List },
+  components: { ListView },
   data() {
     return {
       bans: null,
     };
+  },
+  props: {
+    type: {
+      required: true,
+      type: String,
+    },
   },
   apollo: {
     bans: gql`

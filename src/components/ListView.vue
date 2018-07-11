@@ -1,13 +1,12 @@
 <template>
   <div>
-    <h1>List of {{type}}</h1>
     {{data}}
   </div>
 </template>
 
 <script>
 export default {
-  name: 'List',
+  name: 'ListView',
   props: {
     type: {
       required: true,

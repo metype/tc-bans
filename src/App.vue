@@ -7,14 +7,17 @@
                         <v-chip>BETA</v-chip>
                     </a>
                 </v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items class="hidden-sm-and-down">
+                    <v-btn href="https://forum.tallcraft.com/new-topic?category_id=5" flat>Ban Dispute</v-btn>
+                </v-toolbar-items>
             </v-toolbar>
             <v-content>
                 <v-container fluid>
-                    <v-progress-linear v-show="$apollo.loading" :indeterminate="true">
-                    </v-progress-linear>
                     <router-view></router-view>
                 </v-container>
             </v-content>
+
             <!--<v-bottom-nav :value="true" absolute >-->
                 <!--<v-btn color="primary" flat to="/list/ban">-->
                     <!--<span>Bans</span>-->

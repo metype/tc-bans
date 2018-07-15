@@ -6,7 +6,7 @@
               :items="tableItems"
               :pagination.sync="pagination"
               :total-items="999"
-              :loading="$apollo.loading.ban"
+              :loading="$apollo.queries.bans.loading"
               class="elevation-1"
               item-key="id"
       >

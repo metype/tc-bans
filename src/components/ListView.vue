@@ -5,7 +5,8 @@
               :headers="tableHeaders"
               :items="tableItems"
               :pagination.sync="pagination"
-              :total-items="999"
+              :rows-per-page-items="pageSizeOptions"
+              :total-items="totalItems"
               :loading="$apollo.queries.bans.loading"
               class="elevation-1"
               item-key="id"
@@ -25,15 +26,10 @@ import gql from 'graphql-tag';
 export default {
   name: 'ListView',
   props: {
-    watch: {
-      // Get new data when the pagination (table buttons) updates
-      pagination: {
-        handler() {
-          // TODO: call apollo to re-fetch with changed page number
-        },
-        deep: true,
-      },
-    },
+    type: {
+      default: 'bans',
+      type: String,
+    }
   },
   data() {
     return {
@@ -42,6 +38,7 @@ export default {
         rowsPerPage: 10,
         page: 1,
       },
+      pageSizeOptions: [5, 10, 25, 50],
     };
   },
   methods: {
@@ -52,6 +49,10 @@ export default {
     },
     pageNumber() {
       return this.pagination.page;
+    },
+    totalItems() {
+      // TODO: return total item field from this.bans
+      return 999;
     },
     tableHeaders() {
       // If there is no bans don't return any headers

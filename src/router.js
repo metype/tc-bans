@@ -12,13 +12,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: 'list/ban',
+      redirect: 'list',
     },
     {
-      path: '/list/:type',
+      path: '/list',
       name: 'list',
       component: ListView,
-      props: true,
     },
     {
       path: '/player/:name',
@@ -29,6 +28,6 @@ export default new Router({
     {
       path: '*',
       component: NotFound,
-    }
+    },
   ],
 });

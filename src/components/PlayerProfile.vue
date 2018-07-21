@@ -61,41 +61,85 @@
 
           </v-list-tile>
 
-
-          <!--<v-divider inset></v-divider>-->
-
-          <!--<v-list-tile>-->
-            <!--TODO: Ban data-->
-          <!--</v-list-tile>-->
-
-
         </v-list>
+
+        <v-card-text>
+        <h3>Infractions</h3>
+          <v-data-table
+                  :headers="playerHistoryHeader"
+                  :items="playerHistoryData"
+                  hide-actions
+                  class="elevation-1"
+          >
+            <template slot="items" slot-scope="props">
+              <td v-for="(item, i) in props.item" :key="i">
+                {{ item }}
+              </td>
+            </template>
+          </v-data-table>
+
+        </v-card-text>
       </v-card>
     </v-flex>
   </v-layout>
 
 
-
 </template>
 
 <script>
-  import gql from 'graphql-tag';
+import gql from 'graphql-tag';
 
-  // TODO: allow providing either name or uuid as prop
+// TODO: allow providing either name or uuid as prop
 export default {
   name: 'PlayerProfile',
   props: {
     name: {
       required: true,
       type: String,
-    }
+    },
+  },
+  data() {
+    return {
+      playerHistoryHeader: [
+        {
+          text: 'Type',
+          sortable: false,
+          value: 'type',
+        },
+        {
+          text: 'Active',
+          sortable: false,
+          value: 'active',
+        },
+        {
+          text: 'Server',
+          sortable: false,
+          value: 'server',
+        },
+        {
+          text: 'Reason',
+          sortable: false,
+          value: 'reason',
+        },
+        {
+          text: 'Staff',
+          sortable: false,
+          value: 'staff',
+        },
+        {
+          text: 'Date',
+          sortable: false,
+          value: 'date',
+        },
+      ],
+    };
   },
   computed: {
     playerNotFound() {
       return !this.$apollo.queries.player.loading && this.player == null;
     },
     playerAvatarUrl() {
-      if(this.player == null) {
+      if (this.player == null) {
         return '';
       }
       return `https://crafatar.com/avatars/${this.player.uuid}?size=300&overlay`;
@@ -106,16 +150,50 @@ export default {
     playerLastLogin() {
       return this.formatDate(this.player.lastLogin);
     },
+    playerHistoryData() {
+      if (this.player == null) return null;
+
+      return this.player.bans.map(ban => ({
+        type: 'Ban',
+        active: ban.active,
+        server: ban.server,
+        reason: ban.reason,
+        staff: ban.staff,
+        date: this.formatDate(ban.begin),
+      }))
+        .concat(this.player.kicks.map(kick => ({
+          type: 'Kick',
+          active: '',
+          server: kick.server,
+          reason: kick.reason,
+          staff: kick.staff,
+          date: this.formatDate(kick.date),
+        })))
+        .concat(this.player.mutes.map(mute => ({
+          type: 'Mute',
+          active: mute.active,
+          server: mute.server,
+          reason: mute.reason,
+          staff: mute.staff,
+          date: this.formatDate(mute.begin),
+        })))
+        .concat(this.player.warns.map(warn => ({
+          type: 'Warning',
+          active: '',
+          server: '',
+          reason: warn.reason,
+          staff: warn.staff,
+          date: this.formatDate(warn.date),
+        })));
+    },
   },
   methods: {
     formatDate(date) {
-
-      if(date == null) {
+      if (date == null) {
         return '-';
       }
       const d = new Date(date);
       return d.toLocaleString();
-
     },
   },
   apollo: {
@@ -128,6 +206,31 @@ export default {
             uuid
             firstLogin
             lastLogin
+            bans {
+              active
+              staff
+              reason
+              begin
+              server
+            }
+            kicks {
+              staff
+              reason
+              date
+              server
+            }
+            mutes {
+              active
+              staff
+              reason
+              begin
+              server
+            }
+            warns {
+              staff
+              reason
+              date
+            }
       }
     }`,
       // Static parameters

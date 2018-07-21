@@ -25,12 +25,7 @@ import gql from 'graphql-tag';
 
 export default {
   name: 'ListView',
-  props: {
-    type: {
-      default: 'bans',
-      type: String,
-    }
-  },
+  props: {},
   data() {
     return {
       bans: null,

@@ -43,7 +43,7 @@ export default {
       return this.pagination.rowsPerPage;
     },
     pageNumber() {
-      return this.pagination.page;
+      return this.pagination.page - 1;
     },
     totalItems() {
       // TODO: return total item field from this.bans

@@ -2,12 +2,22 @@
     <div>
         <v-app>
             <v-toolbar color="primary" dark fixed clipped-left app>
-                <v-toolbar-title to="/" > <!-- FIXME: clickable -->
+                <v-toolbar-title to="/" class="mr-3" > <!-- FIXME: clickable -->
                     {{$appName}}
                     <a href="https://forum.tallcraft.com/t/where-is-the-ban-list/72">
                         <v-chip>BETA</v-chip>
                     </a>
                 </v-toolbar-title>
+                <!-- FIXME: mobile view -->
+                <v-text-field
+                        flat
+                        solo-inverted
+                        hide-details
+                        prepend-inner-icon="search"
+                        label="Player Lookup"
+                        v-model="playerInput"
+                        @change="playerLookup"
+                ></v-text-field>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
                     <v-btn href="https://forum.tallcraft.com/new-topic?category_id=5" flat>Ban Dispute</v-btn>
@@ -28,7 +38,13 @@ export default {
   name: 'App',
   data() {
     return {
+      playerInput: '',
     };
+  },
+  methods: {
+    playerLookup() {
+      this.$router.push(`/player/${this.playerInput}`);
+    },
   },
 };
 </script>

@@ -42,8 +42,8 @@ export default {
     pageSize() {
       return this.pagination.rowsPerPage;
     },
-    pageNumber() {
-      return this.pagination.page - 1;
+    offset() {
+      return (  this.pagination.page - 1) * this.pageSize;
     },
     totalItems() {
       // TODO: return total item field from this.bans
@@ -101,7 +101,7 @@ export default {
       variables() {
         return {
           limit: this.pageSize,
-          offset: this.pageNumber,
+          offset: this.offset,
         };
       },
     },

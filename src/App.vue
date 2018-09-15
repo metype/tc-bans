@@ -40,6 +40,11 @@ export default {
       playerInput: '',
     };
   },
+  watch: {
+    $route() {
+      this.playerInput = '';
+    }
+  },
   methods: {
     playerLookup() {
       this.$router.push(`/player/${this.playerInput}`);

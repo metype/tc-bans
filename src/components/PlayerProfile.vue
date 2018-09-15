@@ -2,7 +2,7 @@
   <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
       <v-progress-linear indeterminate v-show="$apollo.queries.player.loading"></v-progress-linear>
-      <v-card v-if="playerNotFound"><v-card-title>Player not found</v-card-title></v-card>
+      <v-card v-if="playerNotFound"><v-card-title>Could not find player '{{name}}'</v-card-title></v-card>
       <v-card v-if="player != null">
         <v-card-media
                 :src="playerAvatarUrl"

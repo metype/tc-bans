@@ -2,12 +2,11 @@
     <div>
         <v-app>
             <v-toolbar color="primary" dark fixed clipped-left app>
-                <v-toolbar-title to="/" class="mr-3" > <!-- FIXME: clickable -->
-                    {{$appName}}
-                    <a href="https://forum.tallcraft.com/t/where-is-the-ban-list/72">
-                        <v-chip>BETA</v-chip>
-                    </a>
-                </v-toolbar-title>
+                <router-link to="/">
+                    <v-toolbar-title id="title"  class="mr-3" >
+                        {{$appName}}
+                    </v-toolbar-title>
+                </router-link>
                 <!-- FIXME: mobile view -->
                 <v-text-field
                         flat
@@ -48,3 +47,10 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+    #title{
+        color: white !important;
+    }
+</style>

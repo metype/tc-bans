@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import NotFound from '@/views/NotFound';
+import NotFound from '@/views/NotFound.vue';
 
-import ListView from '@/components/ListView';
-import PlayerProfile from '@/components/PlayerProfile';
+import ListView from '@/components/ListView.vue';
+import PlayerProfile from '@/components/PlayerProfile.vue';
 
 Vue.use(Router);
 

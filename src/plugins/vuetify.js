@@ -11,10 +11,10 @@ import {
   VList,
   VProgressLinear,
   VTextField,
-  VToolbar
+  VToolbar,
 } from 'vuetify';
 
-require('vuetify/src/stylus/app.styl')
+require('vuetify/src/stylus/app.styl');
 
 
 Vue.use(Vuetify, {
@@ -29,6 +29,6 @@ Vue.use(Vuetify, {
     VList,
     VProgressLinear,
     VTextField,
-    VToolbar
-  }
+    VToolbar,
+  },
 });

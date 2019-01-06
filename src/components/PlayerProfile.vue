@@ -2,10 +2,14 @@
   <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
       <v-progress-linear indeterminate v-show="$apollo.queries.player.loading"></v-progress-linear>
-      <v-card v-if="playerNotFound">
+
+      <v-card v-if="name == null || name === ''">
+        <v-card-title>Please provide a player name to search for</v-card-title>
+      </v-card>
+      <v-card v-else-if="playerNotFound">
         <v-card-title>Could not find player '{{name}}'</v-card-title>
       </v-card>
-      <v-card v-if="player != null">
+      <v-card v-else-if="player != null">
         <v-img
                 :src="playerAvatarUrl"
                 height="300px"
@@ -96,7 +100,7 @@ export default {
   name: 'PlayerProfile',
   props: {
     name: {
-      required: true,
+      default: '',
       type: String,
     },
   },

@@ -12,8 +12,13 @@
               item-key="id"
       >
           <template slot="items" slot-scope="props">
-              <td v-for="(item, i) in props.item" :key="i">
-                  {{ item }}
+              <td v-for="(item, key) in props.item" :key="key">
+                  <router-link
+                          v-if="key === 'player'"
+                          :to="`/player/${item}`">
+                      {{ item }}
+                  </router-link>
+                  <template v-else>{{item}}</template>
               </td>
           </template>
       </v-data-table>
@@ -21,6 +26,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line import/no-extraneous-dependencies
 import gql from 'graphql-tag';
 
 export default {

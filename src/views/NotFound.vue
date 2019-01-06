@@ -10,14 +10,14 @@
 </template>
 
 <script>
-    import Squid from '@/assets/squid.png';
+import Squid from '@/assets/squid.png';
 
-    export default {
-      name: 'NotFound',
-      computed: {
-        squidSrc() {
-          return Squid;
-        }
-      }
-    }
+export default {
+  name: 'NotFound',
+  computed: {
+    squidSrc() {
+      return Squid;
+    },
+  },
+};
 </script>

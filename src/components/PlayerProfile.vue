@@ -2,9 +2,11 @@
   <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
       <v-progress-linear indeterminate v-show="$apollo.queries.player.loading"></v-progress-linear>
-      <v-card v-if="playerNotFound"><v-card-title>Could not find player '{{name}}'</v-card-title></v-card>
+      <v-card v-if="playerNotFound">
+        <v-card-title>Could not find player '{{name}}'</v-card-title>
+      </v-card>
       <v-card v-if="player != null">
-        <v-card-media
+        <v-img
                 :src="playerAvatarUrl"
                 height="300px"
         >
@@ -19,7 +21,7 @@
               <div class="display-1 pl-5 pt-5">{{player.name}}</div>
             </v-card-title>
           </v-layout>
-        </v-card-media>
+        </v-img>
 
         <v-list two-line>
           <v-list-tile>

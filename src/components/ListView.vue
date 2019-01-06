@@ -43,7 +43,7 @@ export default {
       return this.pagination.rowsPerPage;
     },
     offset() {
-      return (  this.pagination.page - 1) * this.pageSize;
+      return (this.pagination.page - 1) * this.pageSize;
     },
     totalItems() {
       // TODO: return total item field from this.bans

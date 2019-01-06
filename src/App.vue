@@ -43,7 +43,7 @@ export default {
   watch: {
     $route() {
       this.playerInput = '';
-    }
+    },
   },
   methods: {
     playerLookup() {

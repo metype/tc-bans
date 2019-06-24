@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app>
+        <v-app :dark="darkTheme">
             <v-toolbar color="primary" dark fixed clipped-left app>
                 <router-link to="/">
                     <v-toolbar-title id="title"  class="mr-3" >
@@ -26,7 +26,16 @@
                 <v-container fluid>
                     <router-view></router-view>
                 </v-container>
+
+
             </v-content>
+            <v-footer>
+                <v-spacer></v-spacer>
+                <v-btn flat icon @click="darkTheme = !darkTheme">
+                    <v-icon>invert_colors</v-icon>
+                </v-btn>
+                <v-spacer></v-spacer>
+            </v-footer>
         </v-app>
     </div>
 </template>
@@ -38,16 +47,34 @@ export default {
   data() {
     return {
       playerInput: '',
+      darkTheme: false,
     };
   },
   watch: {
     $route() {
       this.playerInput = '';
-    }
+    },
+    // Save darkTheme state in localStorage
+    darkTheme() {
+      if (localStorage) localStorage.setItem('darkTheme', this.darkTheme);
+    },
+  },
+  beforeMount() {
+    this.darkTheme = this.getThemeState();
   },
   methods: {
     playerLookup() {
       this.$router.push(`/player/${this.playerInput}`);
+    },
+    getThemeState() {
+      if (!localStorage) {
+        return false;
+      }
+      try {
+        return JSON.parse(localStorage.getItem('darkTheme') || false);
+      } catch (error) {
+        return false;
+      }
     },
   },
 };

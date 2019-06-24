@@ -12,8 +12,13 @@
               item-key="id"
       >
           <template slot="items" slot-scope="props">
-              <td v-for="(item, i) in props.item" :key="i">
-                  {{ item }}
+              <td v-for="(item, key) in props.item" :key="key">
+                  <router-link
+                          v-if="key === 'player'"
+                          :to="`/player/${item}`">
+                      {{ item }}
+                  </router-link>
+                  <template v-else>{{item}}</template>
               </td>
           </template>
       </v-data-table>
@@ -21,6 +26,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line import/no-extraneous-dependencies
 import gql from 'graphql-tag';
 
 export default {
@@ -43,7 +49,7 @@ export default {
       return this.pagination.rowsPerPage;
     },
     offset() {
-      return (  this.pagination.page - 1) * this.pageSize;
+      return (this.pagination.page - 1) * this.pageSize;
     },
     totalItems() {
       // TODO: return total item field from this.bans
@@ -111,4 +117,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    a {
+        color: unset;
+    }
 </style>

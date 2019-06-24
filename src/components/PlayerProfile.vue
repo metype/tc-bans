@@ -1,87 +1,88 @@
 <template>
-  <v-layout row>
-    <v-flex xs12 sm6 offset-sm3>
-      <v-progress-linear indeterminate v-show="$apollo.queries.player.loading"></v-progress-linear>
-      <v-card v-if="playerNotFound"><v-card-title>Could not find player '{{name}}'</v-card-title></v-card>
-      <v-card v-if="player != null">
-        <v-card-media
-                :src="playerAvatarUrl"
-                height="300px"
-        >
-          <v-layout
-                  column
-                  fill-height
-          >
+    <v-layout row>
+        <v-flex xs12 sm6 offset-sm3>
+            <v-progress-linear indeterminate
+                               v-show="$apollo.queries.player.loading"></v-progress-linear>
 
-            <v-spacer></v-spacer>
+            <v-card v-if="name == null || name === ''">
+                <v-card-title>Please provide a player name to search for</v-card-title>
+            </v-card>
+            <v-card v-else-if="playerNotFound">
+                <v-card-title>Could not find player '{{name}}'</v-card-title>
+            </v-card>
+            <v-card v-else-if="player != null">
+                <v-img
+                        :src="playerAvatarUrl"
+                        height="300px"
+                >
+                </v-img>
 
-            <v-card-title class="white--text pl-5 pt-5">
-              <div class="display-1 pl-5 pt-5">{{player.name}}</div>
-            </v-card-title>
-          </v-layout>
-        </v-card-media>
-
-        <v-list two-line>
-          <v-list-tile>
-            <v-list-tile-action>
-              <v-icon color="accent">perm_identity</v-icon>
-            </v-list-tile-action>
-
-            <v-list-tile-content>
-              <v-list-tile-title>{{player.uuid}}</v-list-tile-title>
-              <v-list-tile-sub-title>UUID</v-list-tile-sub-title>
-            </v-list-tile-content>
-
-          </v-list-tile>
-
-          <v-divider inset></v-divider>
-
-          <v-list-tile>
-            <v-list-tile-action>
-              <v-icon color="accent">date_range</v-icon>
-            </v-list-tile-action>
-
-            <v-list-tile-content>
-              <v-list-tile-title>{{playerLastLogin}}</v-list-tile-title>
-              <v-list-tile-sub-title>Last Login</v-list-tile-sub-title>
-            </v-list-tile-content>
-
-          </v-list-tile>
+                <v-card-title primary-title>
+                    <div class="headline">{{player.name}}</div>
+                </v-card-title>
 
 
-          <v-list-tile>
-            <v-list-tile-action>
-              <v-icon color="accent">date_range</v-icon>
-            </v-list-tile-action>
+                <v-list two-line>
+                    <v-list-tile>
+                        <v-list-tile-action>
+                            <v-icon color="accent">perm_identity</v-icon>
+                        </v-list-tile-action>
 
-            <v-list-tile-content>
-              <v-list-tile-title>{{playerFirstLogin}}</v-list-tile-title>
-              <v-list-tile-sub-title>First Login</v-list-tile-sub-title>
-            </v-list-tile-content>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{player.uuid}}</v-list-tile-title>
+                            <v-list-tile-sub-title>UUID</v-list-tile-sub-title>
+                        </v-list-tile-content>
 
-          </v-list-tile>
+                    </v-list-tile>
 
-        </v-list>
+                    <v-divider inset></v-divider>
 
-        <v-card-text>
-        <h3>Infractions</h3>
-          <v-data-table
-                  :headers="playerHistoryHeader"
-                  :items="playerHistoryData"
-                  hide-actions
-                  class="elevation-1"
-          >
-            <template slot="items" slot-scope="props">
-              <td v-for="(item, i) in props.item" :key="i">
-                {{ item }}
-              </td>
-            </template>
-          </v-data-table>
+                    <v-list-tile>
+                        <v-list-tile-action>
+                            <v-icon color="accent">date_range</v-icon>
+                        </v-list-tile-action>
 
-        </v-card-text>
-      </v-card>
-    </v-flex>
-  </v-layout>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{playerLastLogin}}</v-list-tile-title>
+                            <v-list-tile-sub-title>Last Login</v-list-tile-sub-title>
+                        </v-list-tile-content>
+
+                    </v-list-tile>
+
+
+                    <v-list-tile>
+                        <v-list-tile-action>
+                            <v-icon color="accent">date_range</v-icon>
+                        </v-list-tile-action>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{playerFirstLogin}}</v-list-tile-title>
+                            <v-list-tile-sub-title>First Login</v-list-tile-sub-title>
+                        </v-list-tile-content>
+
+                    </v-list-tile>
+
+                </v-list>
+
+                <v-card-text>
+                    <h3>Infractions</h3>
+                    <v-data-table
+                            :headers="playerHistoryHeader"
+                            :items="playerHistoryData"
+                            hide-actions
+                            class="elevation-1"
+                    >
+                        <template slot="items" slot-scope="props">
+                            <td v-for="(item, i) in props.item" :key="i">
+                                {{ item }}
+                            </td>
+                        </template>
+                    </v-data-table>
+
+                </v-card-text>
+            </v-card>
+        </v-flex>
+    </v-layout>
 
 
 </template>
@@ -94,7 +95,7 @@ export default {
   name: 'PlayerProfile',
   props: {
     name: {
-      required: true,
+      default: '',
       type: String,
     },
   },

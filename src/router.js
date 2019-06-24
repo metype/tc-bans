@@ -20,6 +20,10 @@ export default new Router({
       component: ListView,
     },
     {
+      path: '/player',
+      component: PlayerProfile,
+    },
+    {
       path: '/player/:name',
       name: 'player',
       component: PlayerProfile,

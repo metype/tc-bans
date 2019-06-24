@@ -8,10 +8,13 @@ Vue.use(VueApollo);
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token';
 
+// Http endpoint
+const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'https://api.tallcraft.com/graphql';
+
 // Config
 const defaultOptions = {
   // You can use `https` for secure connection (recommended in production)
-  httpEndpoint: process.env.VUE_APP_GRAPHQL_HTTP || 'https://api.tallcraft.com/graphql',
+  httpEndpoint,
   // You can use `wss` for secure connection (recommended in production)
   // Use `null` to disable subscriptions
   wsEndpoint: process.env.VUE_APP_GRAPHQL_WS || null,
@@ -25,7 +28,9 @@ const defaultOptions = {
   // Is being rendered on the server?
   ssr: false,
 
-  // Override default http link
+  // Override default apollo link
+  // note: don't override httpLink here, specify httpLink options in the
+  // httpLinkOptions property of defaultOptions.
   // link: myLink
 
   // Override default cache
@@ -69,7 +74,9 @@ export function createProvider(options = {}) {
 
 // Manually call this when user log in
 export async function onLogin(apolloClient, token) {
-  localStorage.setItem(AUTH_TOKEN, token);
+  if (typeof localStorage !== 'undefined' && token) {
+    localStorage.setItem(AUTH_TOKEN, token);
+  }
   if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
   try {
     await apolloClient.resetStore();
@@ -81,7 +88,9 @@ export async function onLogin(apolloClient, token) {
 
 // Manually call this when user log out
 export async function onLogout(apolloClient) {
-  localStorage.removeItem(AUTH_TOKEN);
+  if (typeof localStorage !== 'undefined') {
+    localStorage.removeItem(AUTH_TOKEN);
+  }
   if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
   try {
     await apolloClient.resetStore();

@@ -1,27 +1,23 @@
 <template>
   <div>
-      <v-data-table
-              v-if="bans"
-              :headers="tableHeaders"
-              :items="tableItems"
-              :pagination.sync="pagination"
-              :rows-per-page-items="pageSizeOptions"
-              :total-items="totalItems"
-              :loading="$apollo.queries.bans.loading"
-              class="elevation-1"
-              item-key="id"
-      >
-          <template slot="items" slot-scope="props">
-              <td v-for="(item, key) in props.item" :key="key">
-                  <router-link
-                          v-if="key === 'player'"
-                          :to="`/player/${item}`">
-                      {{ item }}
-                  </router-link>
-                  <template v-else>{{item}}</template>
-              </td>
-          </template>
-      </v-data-table>
+    <v-data-table
+      v-if="bans"
+      :headers="tableHeaders"
+      :items="tableItems"
+      :pagination.sync="pagination"
+      :rows-per-page-items="pageSizeOptions"
+      :total-items="totalItems"
+      :loading="$apollo.queries.bans.loading"
+      class="elevation-1"
+      item-key="id"
+    >
+      <template slot="items" slot-scope="props">
+        <td v-for="(item, key) in props.item" :key="key">
+          <router-link v-if="key === 'player'" :to="`/player/${item}`">{{ item }}</router-link>
+          <template v-else>{{item}}</template>
+        </td>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
@@ -55,7 +51,7 @@ export default {
       // TODO: return total item field from this.bans
       return 999;
     },
-    tableHeaders() {
+    tableHeaders(status) {
       // If there is no bans don't return any headers
       if (this.bans == null || this.bans.length === 0) {
         return [];
@@ -101,7 +97,52 @@ export default {
         staff
         server
         begin
-      }
+        end
+      },
+    }`,
+
+    warns: {
+      // gql query
+      query: gql`query warns($limit: Int!, $offset: Int!) {
+      warns(limit: $limit, offset: $offset) {
+        player {
+            uuid
+            name
+            }
+        reason
+        staff
+        begin
+      },
+    }`,
+
+    kicks: {
+      // gql query
+      query: gql`query kicks($limit: Int!, $offset: Int!){
+      kicks(limit: 10, offset: 0) {
+       player {
+            uuid
+            name
+        }
+        reason
+        staff
+				server
+    		date
+      },
+    }`,
+
+    mutes: {
+      // gql query
+      query: gql`query mutes($limit: Int!, $offset: Int!) {
+      mutes(limit: $limit, offset: $offset, muteState:True) {
+        player {
+            uuid
+            name
+        }
+        reason
+        staff
+        begin
+        end
+      },
     }`,
       // Static parameters
       variables() {
@@ -117,7 +158,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    a {
-        color: unset;
-    }
+a {
+  color: unset;
+}
 </style>

@@ -26,7 +26,7 @@
 import gql from "graphql-tag";
 
 export default {
-  name: "ListView",
+  name: "SearchProfile",
   props: {},
   data() {
     return {
@@ -103,7 +103,7 @@ export default {
         return {
           limit: this.pageSize,
           offset: this.offset,
-          name: name
+          name: "Metype"
         };
       }
     }

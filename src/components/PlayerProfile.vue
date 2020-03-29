@@ -60,6 +60,7 @@
             :items="playerHistoryData"
             hide-actions
             class="elevation-1"
+            style="overflow: hidden;"
           >
             <template slot="items" slot-scope="props">
               <td v-for="(item, i) in props.item" :key="i">{{ item }}</td>

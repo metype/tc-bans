@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     playerLookup() {
-      this.$router.push(`/player/${this.playerInput}`);
+      this.$router.push(`/search/${this.playerInput}`);
     },
     getThemeState() {
       if (!localStorage) {

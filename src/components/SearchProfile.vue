@@ -89,16 +89,12 @@ export default {
     bans: {
       // gql query
       query: gql`
-        query bans($limit: Int!, $offset: Int!) {
-          bans(limit: $limit, offset: $offset, banState: true) {
-            player {
-              uuid
-              name
-            }
-            reason
-            staff
-            server
-            begin
+        query bans($limit: Int!, $offset: Int!, $name: String!) {
+          players(limit: $limit, offset: $offset, name: $name) {
+            name
+            uuid
+            lastLogin
+            firstLogin
           }
         }
       `,
@@ -106,7 +102,8 @@ export default {
       variables() {
         return {
           limit: this.pageSize,
-          offset: this.offset
+          offset: this.offset,
+          name: "Metype"
         };
       }
     },

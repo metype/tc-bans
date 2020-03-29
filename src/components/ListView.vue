@@ -48,7 +48,7 @@ export default {
     },
     totalItems() {
       // TODO: return total item field from this.bans
-      return 999;
+      return this.bans.length;
     },
     tableHeaders() {
       // If there is no bans don't return any headers

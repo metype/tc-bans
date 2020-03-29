@@ -145,7 +145,7 @@ export default {
           reason: ban.reason,
           staff: ban.staff,
           date: this.formatDate(ban.begin),
-          enddate: this.formatDate(ban.end)
+          enddate: ban.end == null ? "Never" : this.formatDate(ban.end)
         }))
         .concat(
           this.player.kicks.map(kick => ({
@@ -164,7 +164,7 @@ export default {
             reason: mute.reason,
             staff: mute.staff,
             date: this.formatDate(mute.begin),
-            enddate: this.formatDate(mute.end)
+            enddate: mute.end == null ? "Never" : this.formatDate(mute.end)
           }))
         )
         .concat(

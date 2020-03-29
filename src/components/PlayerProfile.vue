@@ -107,12 +107,12 @@ export default {
           value: "staff"
         },
         {
-          text: "Begin",
+          text: "Started",
           sortable: false,
           value: "date"
         },
         {
-          text: "End",
+          text: "Expires",
           sortable: false,
           value: "enddate"
         }

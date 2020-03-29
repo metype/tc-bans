@@ -13,7 +13,7 @@
     >
       <template slot="items" slot-scope="props">
         <td v-for="(item, key) in props.item" :key="key">
-          <router-link v-if="key === 'player'" :to="`/search/${item}`">{{ item }}</router-link>
+          <router-link v-if="key === 'player'" :to="`/player/${item}`">{{ item }}</router-link>
           <template v-else>{{item}}</template>
         </td>
       </template>
@@ -35,7 +35,7 @@ export default {
         rowsPerPage: 10,
         page: 1
       },
-      pageSizeOptions: [5, 10, 25, 50],
+      pageSizeOptions: [5, 10, 25, 50]
     };
   },
   methods: {},

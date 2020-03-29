@@ -1,138 +1,122 @@
 <template>
-    <v-layout row>
-        <v-flex xs12 sm6 offset-sm3>
-            <v-progress-linear indeterminate
-                               v-show="$apollo.queries.player.loading"></v-progress-linear>
+  <v-layout row>
+    <v-flex xs12 sm6 offset-sm3>
+      <v-progress-linear indeterminate v-show="$apollo.queries.player.loading"></v-progress-linear>
 
-            <v-card v-if="name == null || name === ''">
-                <v-card-title>Please provide a player name to search for</v-card-title>
-            </v-card>
-            <v-card v-else-if="playerNotFound">
-                <v-card-title>Could not find player '{{name}}'</v-card-title>
-            </v-card>
-            <v-card v-else-if="player != null">
-                <v-img
-                        :src="playerAvatarUrl"
-                        height="300px"
-                >
-                </v-img>
+      <v-card v-if="name == null || name === ''">
+        <v-card-title>Please provide a player name to search for</v-card-title>
+      </v-card>
+      <v-card v-else-if="playerNotFound">
+        <v-card-title>Could not find player '{{name}}'</v-card-title>
+      </v-card>
+      <v-card v-else-if="player != null">
+        <v-img :src="playerAvatarUrl" height="300px"></v-img>
 
-                <v-card-title primary-title>
-                    <div class="headline">{{player.name}}</div>
-                </v-card-title>
+        <v-card-title primary-title>
+          <div class="headline">{{player.name}}</div>
+        </v-card-title>
 
+        <v-list two-line>
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon color="accent">perm_identity</v-icon>
+            </v-list-tile-action>
 
-                <v-list two-line>
-                    <v-list-tile>
-                        <v-list-tile-action>
-                            <v-icon color="accent">perm_identity</v-icon>
-                        </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>{{player.uuid}}</v-list-tile-title>
+              <v-list-tile-sub-title>UUID</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
 
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{player.uuid}}</v-list-tile-title>
-                            <v-list-tile-sub-title>UUID</v-list-tile-sub-title>
-                        </v-list-tile-content>
+          <v-divider inset></v-divider>
 
-                    </v-list-tile>
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon color="accent">date_range</v-icon>
+            </v-list-tile-action>
 
-                    <v-divider inset></v-divider>
+            <v-list-tile-content>
+              <v-list-tile-title>{{playerLastLogin}}</v-list-tile-title>
+              <v-list-tile-sub-title>Last Login</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
 
-                    <v-list-tile>
-                        <v-list-tile-action>
-                            <v-icon color="accent">date_range</v-icon>
-                        </v-list-tile-action>
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon color="accent">date_range</v-icon>
+            </v-list-tile-action>
 
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{playerLastLogin}}</v-list-tile-title>
-                            <v-list-tile-sub-title>Last Login</v-list-tile-sub-title>
-                        </v-list-tile-content>
+            <v-list-tile-content>
+              <v-list-tile-title>{{playerFirstLogin}}</v-list-tile-title>
+              <v-list-tile-sub-title>First Login</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
 
-                    </v-list-tile>
-
-
-                    <v-list-tile>
-                        <v-list-tile-action>
-                            <v-icon color="accent">date_range</v-icon>
-                        </v-list-tile-action>
-
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{playerFirstLogin}}</v-list-tile-title>
-                            <v-list-tile-sub-title>First Login</v-list-tile-sub-title>
-                        </v-list-tile-content>
-
-                    </v-list-tile>
-
-                </v-list>
-
-                <v-card-text>
-                    <h3>Infractions</h3>
-                    <v-data-table
-                            :headers="playerHistoryHeader"
-                            :items="playerHistoryData"
-                            hide-actions
-                            class="elevation-1"
-                    >
-                        <template slot="items" slot-scope="props">
-                            <td v-for="(item, i) in props.item" :key="i">
-                                {{ item }}
-                            </td>
-                        </template>
-                    </v-data-table>
-
-                </v-card-text>
-            </v-card>
-        </v-flex>
-    </v-layout>
-
-
+        <v-card-text>
+          <h3>Infractions</h3>
+          <v-data-table
+            :headers="playerHistoryHeader"
+            :items="playerHistoryData"
+            hide-actions
+            class="elevation-1"
+          >
+            <template slot="items" slot-scope="props">
+              <td v-for="(item, i) in props.item" :key="i">{{ item }}</td>
+            </template>
+          </v-data-table>
+        </v-card-text>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 // TODO: allow providing either name or uuid as prop
 export default {
-  name: 'PlayerProfile',
+  name: "PlayerProfile",
   props: {
     name: {
-      default: '',
-      type: String,
-    },
+      default: "",
+      type: String
+    }
   },
   data() {
     return {
       playerHistoryHeader: [
         {
-          text: 'Type',
+          text: "Type",
           sortable: false,
-          value: 'type',
+          value: "type"
         },
         {
-          text: 'Active',
+          text: "Server",
           sortable: false,
-          value: 'active',
+          value: "server"
         },
         {
-          text: 'Server',
+          text: "Reason",
           sortable: false,
-          value: 'server',
+          value: "reason"
         },
         {
-          text: 'Reason',
+          text: "Staff",
           sortable: false,
-          value: 'reason',
+          value: "staff"
         },
         {
-          text: 'Staff',
+          text: "Begin",
           sortable: false,
-          value: 'staff',
+          value: "date"
         },
         {
-          text: 'Date',
+          text: "End",
           sortable: false,
-          value: 'date',
-        },
-      ],
+          value: "enddate"
+        }
+      ]
     };
   },
   computed: {
@@ -141,7 +125,7 @@ export default {
     },
     playerAvatarUrl() {
       if (this.player == null) {
-        return '';
+        return "";
       }
       return `https://crafatar.com/avatars/${this.player.uuid}?size=300&overlay`;
     },
@@ -154,55 +138,67 @@ export default {
     playerHistoryData() {
       if (this.player == null) return null;
 
-      return this.player.bans.map(ban => ({
-        type: 'Ban',
-        active: ban.active,
-        server: ban.server,
-        reason: ban.reason,
-        staff: ban.staff,
-        date: this.formatDate(ban.begin),
-      }))
-        .concat(this.player.kicks.map(kick => ({
-          type: 'Kick',
-          active: '',
-          server: kick.server,
-          reason: kick.reason,
-          staff: kick.staff,
-          date: this.formatDate(kick.date),
-        })))
-        .concat(this.player.mutes.map(mute => ({
-          type: 'Mute',
-          active: mute.active,
-          server: mute.server,
-          reason: mute.reason,
-          staff: mute.staff,
-          date: this.formatDate(mute.begin),
-        })))
-        .concat(this.player.warns.map(warn => ({
-          type: 'Warning',
-          active: '',
-          server: '',
-          reason: warn.reason,
-          staff: warn.staff,
-          date: this.formatDate(warn.date),
-        })));
-    },
+      return this.player.bans
+        .map(ban => ({
+          type: "Ban",
+          active: ban.active,
+          server: ban.server,
+          reason: ban.reason,
+          staff: ban.staff,
+          date: this.formatDate(ban.begin),
+          enddate: this.formatDate(ban.end)
+        }))
+        .concat(
+          this.player.kicks.map(kick => ({
+            type: "Kick",
+            active: "N/A",
+            server: kick.server,
+            reason: kick.reason,
+            staff: kick.staff,
+            date: this.formatDate(kick.date),
+            enddate: "N/A"
+          }))
+        )
+        .concat(
+          this.player.mutes.map(mute => ({
+            type: "Mute",
+            active: mute.active,
+            server: mute.server,
+            reason: mute.reason,
+            staff: mute.staff,
+            date: this.formatDate(mute.begin),
+            enddate: this.formatDate(mute.end)
+          }))
+        )
+        .concat(
+          this.player.warns.map(warn => ({
+            type: "Warning",
+            active: "N/A",
+            server: "N/A",
+            reason: warn.reason,
+            staff: warn.staff,
+            date: this.formatDate(warn.date),
+            enddate: "N/A"
+          }))
+        );
+    }
   },
   methods: {
     formatDate(date) {
       if (date == null) {
-        return '-';
+        return "-";
       }
       const d = new Date(date);
       return d.toLocaleString();
-    },
+    }
   },
   apollo: {
     // Query with parameters
     player: {
       // gql query
-      query: gql`query player($name: String!) {
-      player(name: $name) {
+      query: gql`
+        query player($name: String!) {
+          player(name: $name) {
             name
             uuid
             firstLogin
@@ -212,6 +208,7 @@ export default {
               staff
               reason
               begin
+              end
               server
             }
             kicks {
@@ -225,6 +222,7 @@ export default {
               staff
               reason
               begin
+              end
               server
             }
             warns {
@@ -232,15 +230,16 @@ export default {
               reason
               date
             }
-      }
-    }`,
+          }
+        }
+      `,
       // Static parameters
       variables() {
         return {
-          name: this.name,
+          name: this.name
         };
-      },
-    },
-  },
+      }
+    }
+  }
 };
 </script>

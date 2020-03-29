@@ -1,9 +1,9 @@
 import 'babel-polyfill';
 import Vue from 'vue';
-import './plugins/vuetify.js';
+import './plugins/vuetify';
 import App from './App.vue';
-import router from './router.js';
-import { createProvider } from './vue-apollo.js';
+import router from './router';
+import { createProvider } from './vue-apollo';
 
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';

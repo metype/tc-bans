@@ -69,8 +69,8 @@ export default {
     tableItems() {
       return this.bans.map(row => {
         const r = this.$clone(row);
-        if (row.player) {
-          r.player = row.player.name;
+        if (row.name) {
+          r.name = row.name;
         }
         if (row.begin) {
           r.begin = new Date(row.begin).toLocaleDateString();

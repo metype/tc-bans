@@ -37,7 +37,6 @@
 </template>
 
 <script>
-
 export default {
   name: "App",
   data() {
@@ -60,7 +59,7 @@ export default {
   },
   methods: {
     playerLookup() {
-      this.$router.push(`/search/${this.playerInput}`);
+      this.$router.push(`/player/${this.playerInput}`);
     },
     getThemeState() {
       if (!localStorage) {

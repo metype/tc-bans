@@ -26,6 +26,10 @@ export default new Router({
       component: PlayerProfile,
     },
     {
+      path: '/search',
+      component: SearchProfile,
+    },
+    {
       path: '/player/:name',
       name: 'player',
       component: PlayerProfile,

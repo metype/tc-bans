@@ -36,7 +36,6 @@ export default {
         page: 1
       },
       pageSizeOptions: [5, 10, 25, 50],
-      infractionTypeOptions: ["Wanr", "Mute", "Kick", "Ban"]
     };
   },
   methods: {},

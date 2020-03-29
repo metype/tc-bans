@@ -141,7 +141,6 @@ export default {
       return this.player.bans
         .map(ban => ({
           type: "Ban",
-          active: ban.active,
           server: ban.server,
           reason: ban.reason,
           staff: ban.staff,
@@ -151,7 +150,6 @@ export default {
         .concat(
           this.player.kicks.map(kick => ({
             type: "Kick",
-            active: "N/A",
             server: kick.server,
             reason: kick.reason,
             staff: kick.staff,
@@ -162,7 +160,6 @@ export default {
         .concat(
           this.player.mutes.map(mute => ({
             type: "Mute",
-            active: mute.active,
             server: mute.server,
             reason: mute.reason,
             staff: mute.staff,
@@ -173,7 +170,6 @@ export default {
         .concat(
           this.player.warns.map(warn => ({
             type: "Warning",
-            active: "N/A",
             server: "N/A",
             reason: warn.reason,
             staff: warn.staff,

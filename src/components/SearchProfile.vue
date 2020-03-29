@@ -7,7 +7,7 @@
       :pagination.sync="pagination"
       :rows-per-page-items="pageSizeOptions"
       :total-items="totalItems"
-      :loading="$apollo.queries.bans.loading"
+      :loading="$apollo.queries.players.loading"
       class="elevation-1"
       item-key="id"
     >
@@ -36,7 +36,6 @@ export default {
         page: 1
       },
       pageSizeOptions: [5, 10, 25, 50],
-      infractionTypeOptions: ["Wanr", "Mute", "Kick", "Ban"]
     };
   },
   methods: {},

@@ -2,6 +2,7 @@
   "name": "tc-bans",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --modern",
@@ -9,16 +10,16 @@
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.6.2",
+    "babel-polyfill": "^6.26.0",
     "core-js": "^2.6.5",
     "graphql-tag": "^2.10.1",
     "material-design-icons-iconfont": "^5.0.1",
     "roboto-fontface": "^0.10.0",
-    "vue-apollo": "^3.0.0-rc.1",
     "vue": "^2.6.10",
+    "vue-apollo": "^3.0.0-rc.1",
+    "vue-cli-plugin-apollo": "^0.20.0",
     "vue-router": "^3.0.3",
-    "vuetify": "^1.5.5",
-    "babel-polyfill": "^6.26.0",
-    "vue-cli-plugin-apollo": "^0.20.0"
+    "vuetify": "^1.5.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",

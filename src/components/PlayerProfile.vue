@@ -73,51 +73,51 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 // TODO: allow providing either name or uuid as prop
 export default {
-  name: "PlayerProfile",
+  name: 'PlayerProfile',
   props: {
     name: {
-      default: "",
-      type: String
-    }
+      default: '',
+      type: String,
+    },
   },
   data() {
     return {
       playerHistoryHeader: [
         {
-          text: "Type",
+          text: 'Type',
           sortable: false,
-          value: "type"
+          value: 'type',
         },
         {
-          text: "Server",
+          text: 'Server',
           sortable: false,
-          value: "server"
+          value: 'server',
         },
         {
-          text: "Reason",
+          text: 'Reason',
           sortable: false,
-          value: "reason"
+          value: 'reason',
         },
         {
-          text: "Staff",
+          text: 'Staff',
           sortable: false,
-          value: "staff"
+          value: 'staff',
         },
         {
-          text: "Started",
+          text: 'Started',
           sortable: false,
-          value: "date"
+          value: 'date',
         },
         {
-          text: "Expires",
+          text: 'Expires',
           sortable: false,
-          value: "enddate"
-        }
-      ]
+          value: 'enddate',
+        },
+      ],
     };
   },
   computed: {
@@ -126,7 +126,7 @@ export default {
     },
     playerAvatarUrl() {
       if (this.player == null) {
-        return "";
+        return '';
       }
       return `https://crafatar.com/avatars/${this.player.uuid}?size=300&overlay`;
     },
@@ -141,53 +141,53 @@ export default {
 
       return this.player.bans
         .map(ban => ({
-          type: "Ban",
+          type: 'Ban',
           server: ban.server,
           reason: ban.reason,
           staff: ban.staff,
           date: this.formatDate(ban.begin),
-          enddate: ban.end == null ? "Never" : this.formatDate(ban.end)
+          enddate: ban.end == null ? 'Never' : this.formatDate(ban.end),
         }))
         .concat(
           this.player.kicks.map(kick => ({
-            type: "Kick",
+            type: 'Kick',
             server: kick.server,
             reason: kick.reason,
             staff: kick.staff,
             date: this.formatDate(kick.date),
-            enddate: "N/A"
-          }))
+            enddate: 'N/A',
+          })),
         )
         .concat(
           this.player.mutes.map(mute => ({
-            type: "Mute",
+            type: 'Mute',
             server: mute.server,
             reason: mute.reason,
             staff: mute.staff,
             date: this.formatDate(mute.begin),
-            enddate: mute.end == null ? "Never" : this.formatDate(mute.end)
-          }))
+            enddate: mute.end == null ? 'Never' : this.formatDate(mute.end),
+          })),
         )
         .concat(
           this.player.warns.map(warn => ({
-            type: "Warning",
-            server: "N/A",
+            type: 'Warning',
+            server: 'N/A',
             reason: warn.reason,
             staff: warn.staff,
             date: this.formatDate(warn.date),
-            enddate: "N/A"
-          }))
+            enddate: 'N/A',
+          })),
         );
-    }
+    },
   },
   methods: {
     formatDate(date) {
       if (date == null) {
-        return "-";
+        return '-';
       }
       const d = new Date(date);
       return d.toLocaleString();
-    }
+    },
   },
   apollo: {
     // Query with parameters
@@ -233,10 +233,10 @@ export default {
       // Static parameters
       variables() {
         return {
-          name: this.name
+          name: this.name,
         };
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

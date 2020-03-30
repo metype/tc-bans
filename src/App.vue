@@ -38,21 +38,21 @@
 
 <script>
 export default {
-  name: "App",
+  name: 'App',
   data() {
     return {
-      playerInput: "",
-      darkTheme: false
+      playerInput: '',
+      darkTheme: false,
     };
   },
   watch: {
     $route() {
-      this.playerInput = "";
+      this.playerInput = '';
     },
     // Save darkTheme state in localStorage
     darkTheme() {
-      if (localStorage) localStorage.setItem("darkTheme", this.darkTheme);
-    }
+      if (localStorage) localStorage.setItem('darkTheme', this.darkTheme);
+    },
   },
   beforeMount() {
     this.darkTheme = this.getThemeState();
@@ -66,12 +66,12 @@ export default {
         return false;
       }
       try {
-        return JSON.parse(localStorage.getItem("darkTheme") || false);
+        return JSON.parse(localStorage.getItem('darkTheme') || false);
       } catch (error) {
         return false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

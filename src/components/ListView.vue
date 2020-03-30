@@ -24,19 +24,19 @@
 
 <script>
 // eslint-disable-next-line import/no-extraneous-dependencies
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export default {
-  name: "ListView",
+  name: 'ListView',
   props: {},
   data() {
     return {
       bans: null,
       pagination: {
         rowsPerPage: 10,
-        page: 1
+        page: 1,
       },
-      pageSizeOptions: [5, 10, 25, 50]
+      pageSizeOptions: [5, 10, 25, 50, 100],
     };
   },
   methods: {},
@@ -49,7 +49,7 @@ export default {
     },
     totalItems() {
       // TODO: return total item field from this.bans
-      return this.bans.length;
+      return 10000;
     },
     tableHeaders() {
       // If there is no bans don't return any headers
@@ -57,33 +57,35 @@ export default {
         return [];
       }
       return Object.keys(this.bans[0])
-        .map(label => {
-          if (label.startsWith("__")) return null;
+        .map((label) => {
+          if (label.startsWith('__')) return null;
           return {
             sortable: false,
             text: label[0].toUpperCase() + label.substr(1),
-            value: label
+            value: label,
           };
         })
         .filter(l => l != null);
     },
     tableItems() {
-      return this.bans.map(row => {
+      return this.bans.map((row) => {
         const r = this.$clone(row);
         if (row.player) {
           r.player = row.player.name;
         }
         if (row.begin) {
-          r.begin = new Date(row.begin).toLocaleDateString();
+          r.begin = `${new Date(row.begin).toLocaleDateString()} | ${new Date(row.begin).toLocaleTimeString()}`;
         }
         if (row.end) {
-          r.end = new Date(row.end).toLocaleDateString();
+          r.end = `${new Date(row.end).toLocaleDateString()} | ${new Date(row.end).toLocaleTimeString()}`;
+        } else {
+          r.end = 'Never';
         }
         // eslint-disable-next-line no-underscore-dangle
         delete r.__typename;
         return r;
       });
-    }
+    },
   },
   apollo: {
     // Query with parameters
@@ -91,7 +93,7 @@ export default {
       // gql query
       query: gql`
         query bans($limit: Int!, $offset: Int!) {
-          bans(limit: $limit, offset: $offset, banState: true) {
+          bans(limit: $limit, offset: $offset) {
             player {
               uuid
               name
@@ -100,6 +102,7 @@ export default {
             staff
             server
             begin
+            end
           }
         }
       `,
@@ -107,11 +110,11 @@ export default {
       variables() {
         return {
           limit: this.pageSize,
-          offset: this.offset
+          offset: this.offset,
         };
-      }
+      },
     },
-  }
+  },
 };
 </script>
 

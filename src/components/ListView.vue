@@ -111,54 +111,6 @@ export default {
         };
       }
     },
-    warns: {
-      // gql query
-      query: gql`
-        query warns($limit: Int!, $offset: Int!) {
-          warns(limit: $limit, offset: $offset) {
-            player {
-              uuid
-              name
-            }
-            reason
-            staff
-            date
-            id
-          }
-        }
-      `,
-      // Static parameters
-      variables() {
-        return {
-          limit: this.pageSize,
-          offset: this.offset
-        };
-      }
-    },
-    kicks: {
-      // gql query
-      query: gql`
-        query kicks($limit: Int!, $offset: Int!) {
-          kicks(limit: $limit, offset: $offset) {
-            player {
-              uuid
-              name
-            }
-            reason
-            staff
-            date
-            id
-          }
-        }
-      `,
-      // Static parameters
-      variables() {
-        return {
-          limit: this.pageSize,
-          offset: this.offset
-        };
-      }
-    }
   }
 };
 </script>

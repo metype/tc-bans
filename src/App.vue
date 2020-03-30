@@ -25,7 +25,7 @@
           <router-view></router-view>
         </v-container>
       </v-content>
-      <v-footer>
+      <v-footer id="footer">
         <v-spacer></v-spacer>
         <v-btn flat icon @click="darkTheme = !darkTheme">
           <v-icon>invert_colors</v-icon>
@@ -79,5 +79,8 @@ export default {
 <style scoped>
 #title {
   color: white !important;
+}
+#footer{
+  margin:100
 }
 </style>

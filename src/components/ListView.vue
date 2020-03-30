@@ -61,7 +61,7 @@ export default {
           if (label.startsWith('__')) return null;
           return {
             sortable: false,
-            text: label[0].toUpperCase() + label.substr(1),
+            text: (label[0].toUpperCase() + label.substr(1) === 'End') ? 'Expires' : label[0].toUpperCase() + label.substr(1),
             value: label,
           };
         })
@@ -77,12 +77,13 @@ export default {
           r.begin = `${new Date(row.begin).toLocaleDateString()} | ${new Date(row.begin).toLocaleTimeString()}`;
         }
         if (row.end) {
-          r.end = `${new Date(row.end).toLocaleDateString()} | ${new Date(row.end).toLocaleTimeString()}`;
+          r.expires = `${new Date(row.end).toLocaleDateString()} | ${new Date(row.end).toLocaleTimeString()}`;
         } else {
-          r.end = 'Never';
+          r.expires = 'Never';
         }
         // eslint-disable-next-line no-underscore-dangle
         delete r.__typename;
+        delete r.end;
         return r;
       });
     },

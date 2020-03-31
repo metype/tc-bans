@@ -74,10 +74,10 @@ export default {
           r.player = row.player.name;
         }
         if (row.begin) {
-          r.begin = `${new Date(row.begin).toLocaleDateString()} | ${new Date(row.begin).toLocaleTimeString()}`;
+          r.begin = `${new Date(row.begin).toLocaleDateString()}, ${new Date(row.begin).toLocaleTimeString()}`;
         }
         if (row.end) {
-          r.expires = `${new Date(row.end).toLocaleDateString()} | ${new Date(row.end).toLocaleTimeString()}`;
+          r.expires = `${new Date(row.end).toLocaleDateString()}, ${new Date(row.end).toLocaleTimeString()}`;
         } else {
           r.expires = 'Never';
         }

@@ -1,6 +1,6 @@
 <template>
   <v-layout row>
-    <v-flex xs12 sm6 offset-sm3>
+    <v-flex xs12 sm10 offset-sm1>
       <v-progress-linear indeterminate v-show="$apollo.queries.player.loading"></v-progress-linear>
 
       <v-card v-if="name == null || name === ''">
@@ -10,7 +10,7 @@
         <v-card-title>Could not find player '{{name}}'</v-card-title>
       </v-card>
       <v-card v-else-if="player != null">
-        <v-img :src="playerAvatarUrl" height="300px"></v-img>
+        <v-img :src="playerAvatarUrl" height="500px"></v-img>
 
         <v-card-title primary-title>
           <div class="headline">{{player.name}}</div>

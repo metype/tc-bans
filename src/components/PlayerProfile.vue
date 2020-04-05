@@ -108,11 +108,6 @@ export default {
           value: 'type',
         },
         {
-          text: 'Active',
-          sortable: false,
-          value: 'active',
-        },
-        {
           text: 'Server',
           sortable: false,
           value: 'server',
@@ -131,6 +126,11 @@ export default {
           text: 'Date',
           sortable: false,
           value: 'date',
+        },
+        {
+          text: 'Expires',
+          sortable: false,
+          value: 'active',
         },
       ],
     };
@@ -156,35 +156,35 @@ export default {
 
       return this.player.bans.map(ban => ({
         type: 'Ban',
-        active: ban.active,
         server: ban.server,
         reason: ban.reason,
         staff: ban.staff,
         date: this.formatDate(ban.begin),
+        end: (ban.end == null) ? 'Never' : this.formatDate(ban.end),
       }))
         .concat(this.player.kicks.map(kick => ({
           type: 'Kick',
-          active: '',
           server: kick.server,
           reason: kick.reason,
           staff: kick.staff,
           date: this.formatDate(kick.date),
+          end: 'N/A',
         })))
         .concat(this.player.mutes.map(mute => ({
           type: 'Mute',
-          active: mute.active,
           server: mute.server,
           reason: mute.reason,
           staff: mute.staff,
           date: this.formatDate(mute.begin),
+          end: (mute.end == null) ? 'Never' : this.formatDate(mute.end),
         })))
         .concat(this.player.warns.map(warn => ({
           type: 'Warning',
-          active: '',
-          server: '',
+          server: 'N/A',
           reason: warn.reason,
           staff: warn.staff,
           date: this.formatDate(warn.date),
+          end: 'N/A',
         })));
     },
   },
@@ -208,7 +208,7 @@ export default {
             firstLogin
             lastLogin
             bans {
-              active
+              end
               staff
               reason
               begin
@@ -221,7 +221,7 @@ export default {
               server
             }
             mutes {
-              active
+              end
               staff
               reason
               begin

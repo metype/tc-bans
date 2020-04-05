@@ -64,7 +64,7 @@ export default {
         if (label.startsWith('__')) return null;
         return {
           sortable: false,
-          text: label[0].toUpperCase() + label.substr(1),
+          text: (label[0].toUpperCase() + label.substr(1) === 'End') ? 'Expires' : label[0].toUpperCase() + label.substr(1),
           value: label,
         };
       }).filter(l => l != null);
@@ -76,13 +76,16 @@ export default {
           r.player = row.player.name;
         }
         if (row.begin) {
-          r.begin = new Date(row.begin).toLocaleDateString();
+          r.begin = new Date(row.begin).toLocaleString();
         }
         if (row.end) {
-          r.end = new Date(row.end).toLocaleDateString();
+          r.expires = new Date(row.end).toLocaleString();
+        } else {
+          r.expires = 'Never';
         }
         // eslint-disable-next-line no-underscore-dangle
         delete r.__typename;
+        delete r.end;
         return r;
       });
     },
@@ -101,6 +104,7 @@ export default {
         staff
         server
         begin
+        end
       }
     }`,
       // Static parameters

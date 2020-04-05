@@ -14,7 +14,6 @@
           label="Player Lookup"
           v-model="playerInput"
           @change="playerLookup"
-          id="player-lookup"
         ></v-text-field>
         <v-spacer></v-spacer>
         <v-toolbar-items>
